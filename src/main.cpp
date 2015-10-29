@@ -28,16 +28,27 @@ void command (char** args) {
     }
 }
 
-int main (void) {
-    string user_in;
-    Parse in;
+// provides the user@hostname $
+void prompt() {
+    if ( getlogin() != NULL ) // only runs if there is a login user
+        cout << getlogin() << "@";
+    char hostname[254]; // can hold a 255 character hostname
+    if( gethostname(hostname, 255) ) // only runs if there is a host
+        cout << hostname << " ";
+    cout << "$" << " ";
+}
 
-    while (1) {
-        printf("$ "); getline(cin, user_in);
+int main (void) {
+    string user_in; // the values of the string go into here
+    Parse in; // object that handles all of the commands
+
+    while (true) {
+        prompt(); getline(cin, user_in);
         in.parse_input(user_in);
         if (in.exit()) { exit(0); }
         command(in.get_cmd());
         printf("\n");
+        in.parse_clear();
     }
 
     return 0;

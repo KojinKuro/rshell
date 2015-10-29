@@ -14,4 +14,6 @@ $ ./bin/rshell
 ```
 
 ## Known Bugs
-* None
+* Connectors has not yet been implmented into the program.
+* Crashes after inputing an empty command. AKA only entering.
+* Comments are not a thing.
