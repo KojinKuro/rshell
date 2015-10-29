@@ -9,7 +9,7 @@
 
 using namespace std;
 
-void command(char** args) {
+void command (char** args) {
     pid_t c_pid, pid;
     int status;
     c_pid = fork();
@@ -22,25 +22,20 @@ void command(char** args) {
         execvp(*args, args);
         perror("execvp failed");
     }
-    else if (c_pid > 0) {
-        if ((pid = wait(&status)) < 0) {
-            perror("wait");
-            exit(1);
-        }
+    else if (c_pid > 0 && (pid = wait(&status)) < 0) {
+        perror("wait");
+        exit(1);
     }
 }
 
-int main(void) {
+int main (void) {
     string user_in;
     Parse in;
 
     while (1) {
-        printf("$ ");
-        getline(cin, user_in);
+        printf("$ "); getline(cin, user_in);
         in.parse_input(user_in);
-        if (in.exit()) {
-            exit(0);
-        }
+        if (in.exit()) { exit(0); }
         command(in.get_cmd());
         printf("\n");
     }

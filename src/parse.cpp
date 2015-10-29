@@ -2,23 +2,26 @@
 
 using namespace std;
 
+// handles if nothing is inputed
 Parse::Parse() {
     str = new char[1];
     str[0] = '\0';
 }
 
+// handles character arrays
 Parse::Parse(char* s) {
     strcpy(str, s);
 }
 
+// handles strings
 Parse::Parse(string s) {
     strcpy(str, s.c_str());
 }
 
+// deconstructor
 Parse::~Parse() {
-    if (str) {
+    if (str)
         delete[] str;
-    }
 }
 
 void Parse::parse_input(string s) {
@@ -35,18 +38,13 @@ void Parse::parse_input(string s) {
 
 bool Parse::exit() {
     char* e = (char*)"exit";
-    bool result = false;
-    if (strcmp(user_in.front(), e) == 0) {
-        result = true;
-    }
-    return result;
+    return (strcmp(user_in.front(), e) == 0);
 }
 
 char** Parse::get_cmd() {
     int size = user_in.size();
-    for (int i = 0; i < size; i++) {
+    for (int i = 0; i < size; i++)
         cmd[i] = user_in[i]; 
-    }
 
     return cmd;
 }
