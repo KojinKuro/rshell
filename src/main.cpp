@@ -49,9 +49,12 @@ int main (void) {
         //std::cout << "in.parse_input\n";
         if (in.exit()) { exit(0); }
         //std::cout << "exit\n";
-        command(in.get_cmd());
+        while(in.get_cmd) {
+            command(in.get_front_cmd());
+        }
         //std::cout << "in.get_cmd\n";
         printf("\n");
+        //cout << in.connectors() << endl;
         in.parse_clear();
         //std::cout << "parse_clear\n";
     }

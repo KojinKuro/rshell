@@ -15,7 +15,7 @@ using namespace std;
 class Parse {
     protected:
         char* str; 		//The string entered by the user
-        char* cmd[MAX];		//
+        char* cmd[MAX];
     public:
         vector<char*> user_in;  //Stores the seperate words entered by the user
         Parse() {
@@ -52,23 +52,27 @@ class Parse {
             }
             return (strcmp(user_in.front(), e) == 0);
         }
-        char** get_cmd() {
+        char** get_front_cmd() {
             int size = user_in.size();
-            for (int i = 0; i < size; i++)
-                cmd[i] = user_in[i]; 
+            for (int i = 0; i < size; i++) {
+                cmd[i] = user_in[i];
+            }
 
             return cmd;
         }
+        // has seg fault
         int connectors() {
             int total = 0;
             char* a = (char*)"&&";
             char* o = (char*)"||";
             char* e = (char*)";";
 
-            for (int i = 0, max = user_in.size(); i < max; i++) {
-                if (strcmp(a, user_in[i]) == 0 || 
-                    strcmp(o, user_in[i]) == 0 || 
-                    strcmp(e, user_in[i]) == 0) {
+            cout << "black" << endl;
+
+            for (int x = 0, max = user_in.size(); x < max; x++) {
+                if (strcmp(a, user_in[x]) == 0 || 
+                    strcmp(o, user_in[x]) == 0 || 
+                    strcmp(e, user_in[x]) == 0) {
                     total++;
                 }
             }
@@ -81,6 +85,13 @@ class Parse {
                 printf("%s\n", *it);
             }
         }
+        bool can_move_on() {
+            return false;
+        }
+        void move_on() {
+            return 0;
+        }
+
 };
 
 #endif
