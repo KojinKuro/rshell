@@ -1,6 +1,7 @@
 #ifndef _PARSE_H
 #define _PARSE_H
 
+#include <iostream>
 #include <stdio.h>
 #include <string>
 #include <cstring>
@@ -13,10 +14,10 @@ using namespace std;
 
 class Parse {
     protected:
-        char* str;
-        char* cmd[MAX];
+        char* str; 		//The string entered by the user
+        char* cmd[MAX];		//
     public:
-        vector<char*> user_in;
+        vector<char*> user_in;  //Stores the seperate words entered by the user
         Parse() {
             str = new char[1];
             str[0] = '\0';
@@ -28,30 +29,37 @@ class Parse {
         void parse_input(string s) {
             strcpy(str, s.c_str());
             char* pch;
+            //cout << "PARSE_INPUT\n";
             pch = strtok(str, " ");
+            //cout << "strok(str, " ")\n";
             while (pch != NULL) {
                 //printf("%s\n", pch);
                 user_in.push_back(pch);
                 pch = strtok(NULL, " ");
             }
+            //cout << "END WHILE\n";
             user_in.push_back(NULL);
+            //cout << "DONE PARSE_INPUT\n";  
         }
         void parse_clear() { user_in.clear(); }
-        bool exit()
-        {
+        bool exit() {
             char* e = (char*)"exit";
+            //cout << "exit_\n";
+            //return (strcmp("here", e) == 0);
+            //cout << user_in.size() << endl;
+            if (user_in.size() == 1){
+                return false;
+            }
             return (strcmp(user_in.front(), e) == 0);
         }
-        char** get_cmd()
-        {
+        char** get_cmd() {
             int size = user_in.size();
             for (int i = 0; i < size; i++)
                 cmd[i] = user_in[i]; 
 
             return cmd;
         }
-        int connectors()
-        {
+        int connectors() {
             int total = 0;
             char* a = (char*)"&&";
             char* o = (char*)"||";
@@ -66,8 +74,7 @@ class Parse {
             }
             return total;
         }
-        void print_vector()
-        {
+        void print_vector() {
             // for (int i = 0, max = user_in.size(); i < max; i++) {
             for (vector<char*>::iterator it = user_in.begin(), end = user_in.end(); it != end; it++) {
                 // printf("%s\n", user_in[i]);
