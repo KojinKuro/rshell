@@ -1,3 +1,6 @@
+Charles Kwang - ckwan004
+Alec Wallace - awall006
+
 # rshell
 * Hello there! Welcome to my README.md file.
 ## Overview
