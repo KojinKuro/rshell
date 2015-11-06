@@ -9,6 +9,7 @@
 
 //forks a new procces
 void command (char** args) {
+    std::cout << "in command\n";
     pid_t c_pid, pid;
     int status;
     c_pid = fork();
@@ -38,7 +39,7 @@ void prompt() {
 }
 
 int main (void) {
-    std::cout << "main\n";
+    //std::cout << "main\n";
     string user_in;    // the values of the string go into here
     Parse in;         // object that handles all of the commands
 

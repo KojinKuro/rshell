@@ -15,4 +15,4 @@ $ ./bin/rshell
 ## Known Bugs
 * Connectors has not yet been implmented into the program.
 * Comments are not a thing.
-* need to enter exit twice after hitting enter with no other input.
+*problems with exit

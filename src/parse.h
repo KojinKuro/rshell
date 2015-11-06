@@ -31,23 +31,22 @@ class Parse {
         ~Parse() { if (str) { delete[] str; } }
 
         void parse_input(string s) {
-            /*
             strcpy(str, s.c_str());
             char* pch;
-            //cout << "PARSE_INPUT\n";
+              cout << "PARSE_INPUT\n";
             pch = strtok(str, " ");
-            //cout << "strok(str, " ")\n";
+              //cout << "strok(str, " ")\n";
             while (pch != NULL) {
                 //printf("%s\n", pch);
                 user_in.push_back(pch);
                 pch = strtok(NULL, " ");
             }
-            //cout << "END WHILE\n";
+              cout << "END WHILE\n";
             user_in.push_back(NULL);
-            //cout << "DONE PARSE_INPUT\n"; 
-            */
-
-            while (s.length() > 0) {
+              cout << "DONE PARSE_INPUT\n";
+ 
+            //GETS STUCK IN THIS LOOP
+     /*       while (s.length() > 0) {
                 // set up the variables
                 int semi = s.find_first_of(";", 0);
                 int orrr = s.find_first_of("||", 0);
@@ -56,16 +55,19 @@ class Parse {
                 int pos = smallest(semi, orrr, andd);
 
                 // this is for sitatuions where nothing can be found
-                if(pos == -1) {
-                    if(s.find_first_not_of() == string::npos) { break; }
-                } else if (pos == semi) {
+                if(pos == -1) {//probably not working
+                    if(s.find_first_not_of(" ") == string::npos) { break; }
+                }
+                else if (pos == semi) {
                     logic.push_back(0);
-                } else if (pos == orrr) {
+                }
+                else if (pos == orrr) {
                     logic.push_back(1);
-                } else if (pos == andd) {
+                }
+                else if (pos == andd) {
                     logic.push_back(2);
                 }
-
+break;*/
                 /*  CODE TO USE
                     if(pos == -1)
                     {
@@ -113,15 +115,15 @@ class Parse {
                         q.push("&&");
                         line.erase(0, pos+2);
                     } */
-            }
-
+        /*    }
+              cout << "END WHILE2\n"; */
         }
         void parse_clear() { user_in.clear(); }
         bool exit() {
             char* e = (char*)"exit";
-            //cout << "exit_\n";
+              cout << "exit_\n";
             //return (strcmp("here", e) == 0);
-            //cout << user_in.size() << endl;
+              cout << user_in.size() << endl;
             if (user_in.size() == 1){
                 return false;
             }
