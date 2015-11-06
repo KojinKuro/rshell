@@ -1,5 +1,5 @@
 # rshell
-*Hello there! Welcome to my README.md file.*
+* Hello there! Welcome to my README.md file.
 ## Overview
 Insert overview of what rshell does here.
 
@@ -14,5 +14,4 @@ $ ./bin/rshell
 
 ## Known Bugs
 * Connectors has not yet been implmented into the program.
-* Comments are not a thing.
-*problems with exit
+* problems with exit.

@@ -38,6 +38,9 @@ class Parse {
               //cout << "strok(str, " ")\n";
             while (pch != NULL) {
                 //printf("%s\n", pch);
+                if(pch[0] == '#'){
+                    break;
+                }
                 user_in.push_back(pch);
                 pch = strtok(NULL, " ");
             }
