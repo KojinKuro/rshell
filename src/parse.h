@@ -17,7 +17,11 @@ class Parse {
         char* str; 		//The string entered by the user
         char* cmd[MAX];
     public:
-        vector<char*> user_in;  //Stores the seperate words entered by the user
+        vector<char*> user_in;  // Stores the seperate words entered by the user
+        vector<int> logic;      // Stores the logic for the user_input
+                                // 0: ; 1: || 2: &&
+
+
         Parse() {
             str = new char[1];
             str[0] = '\0';
@@ -27,6 +31,7 @@ class Parse {
         ~Parse() { if (str) { delete[] str; } }
 
         void parse_input(string s) {
+            /*
             strcpy(str, s.c_str());
             char* pch;
             //cout << "PARSE_INPUT\n";
@@ -39,7 +44,77 @@ class Parse {
             }
             //cout << "END WHILE\n";
             user_in.push_back(NULL);
-            //cout << "DONE PARSE_INPUT\n";  
+            //cout << "DONE PARSE_INPUT\n"; 
+            */
+
+            while (s.length() > 0) {
+                // set up the variables
+                int semi = s.find_first_of(";", 0);
+                int orrr = s.find_first_of("||", 0);
+                int andd = s.find_first_of("&&", 0);
+
+                int pos = smallest(semi, orrr, andd);
+
+                // this is for sitatuions where nothing can be found
+                if(pos == -1) {
+                    if(s.find_first_not_of() == string::npos) { break; }
+                } else if (pos == semi) {
+                    logic.push_back(0);
+                } else if (pos == orrr) {
+                    logic.push_back(1);
+                } else if (pos == andd) {
+                    logic.push_back(2);
+                }
+
+                /*  CODE TO USE
+                    if(pos == -1)
+                    {
+                        if(line.find_first_not_of(" ") == string::npos)
+                            return q;
+                        q.push(line);
+                        line = "";
+                    }
+                    else if(pos == semi)
+                    {
+                        string linecpy(line);
+                        if(!strtok((char*)linecpy.c_str(), ";"))
+                        {
+                            cout << "Error. not enough arguments." << endl;
+                            return q;
+                        }
+                        s = strtok((char*)line.c_str(), ";");
+                        q.push(s);
+                        q.push(";");
+                        line.erase(0, pos+1);
+                    }
+                    else if(pos == orr)
+                    {
+                        string linecpy(line);
+                        if(!strtok((char*)linecpy.c_str(), "|"))
+                        {
+                            cout << "Error. not enough arguments." << endl;
+                            return q;
+                        }
+                        s = strtok((char*)line.c_str(), "|");
+                        q.push(s);
+                        q.push("||");
+                        line.erase(0, pos+2);
+                    }
+                    else    
+                    {
+                        string linecpy(line);
+                        if(!strtok((char*)linecpy.c_str(), "&"))
+                        {
+                            cout << "Error. not enough arguments." << endl;
+                            return q;
+                        }
+                        s = strtok((char*)line.c_str(), "&");
+                        q.push(s);
+                        q.push("&&");
+                        line.erase(0, pos+2);
+                    } */
+            }
+
         }
         void parse_clear() { user_in.clear(); }
         bool exit() {
@@ -61,14 +136,13 @@ class Parse {
             return cmd;
         }
         // has seg fault
-        int connectors() {
+        void connectors() {
+        // int connectors() {
             int total = 0;
             char* a = (char*)"&&";
             char* o = (char*)"||";
             char* e = (char*)";";
-
-            cout << "black" << endl;
-
+            
             for (int x = 0, max = user_in.size(); x < max; x++) {
                 if (strcmp(a, user_in[x]) == 0 || 
                     strcmp(o, user_in[x]) == 0 || 
@@ -76,7 +150,9 @@ class Parse {
                     total++;
                 }
             }
-            return total;
+
+            cout << total << endl;
+            // return total;
         }
         void print_vector() {
             // for (int i = 0, max = user_in.size(); i < max; i++) {
@@ -89,7 +165,15 @@ class Parse {
             return false;
         }
         void move_on() {
-            return 0;
+
+        }
+
+        // helper math funciton that returns the samllest number of 3 numbers
+        int smallest(int x, int y, int z) {
+            int result = x;
+            if (y < result) { result = y; }
+            if (z < result) { result = z; }
+            return result;
         }
 
 };
