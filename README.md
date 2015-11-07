@@ -6,7 +6,7 @@ Alec Wallace - awall006
 
 # rshell
 ## Overview
-This is *rshell*. *rshell* is a pseudo terminal that runs bash commands and scrips.
+This is **rshell**. **rshell** is a pseudo terminal that runs bash commands and scrips.
 
 ## How to Build
 ```bash
@@ -18,6 +18,7 @@ $ ./bin/rshell
 ```
 
 ## Known Bugs
-* Connectors has not yet been implmented into the program.
-* problems with exit.
->>>>>>> exec
+* || doesn't work
+* && breaks the first input and if there is 3 inputs ignores the second and inputs the third twice
+* Semicolon breaks the first input
+* mkdir, ls don't work
