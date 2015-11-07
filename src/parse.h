@@ -102,7 +102,7 @@ class Parse {
                     for (i = 0; pch != NULL; ++i) {
                         //printf("%s\n", pch);
                         value[i] = pch;
-                        cout << value[i];
+                        //cout << value[i];
                         pch = strtok(NULL, " ");
                     }
                     i++;
@@ -134,7 +134,7 @@ class Parse {
                     for (i = 0; pch != NULL; ++i) {
                         //printf("%s\n", pch);
                         value[i] = pch;
-                        cout << value[i];
+                        //cout << value[i];
                         pch = strtok(NULL, " ");
                     }
                     i++;
@@ -161,7 +161,7 @@ class Parse {
                     for (i = 0; pch != NULL; ++i) {
                         //printf("%s\n", pch);
                         value[i] = pch;
-                        cout << value[i];
+                        //cout << value[i];
                         pch = strtok(NULL, " ");
                     }
                     i++;
@@ -190,7 +190,7 @@ class Parse {
                     for (i = 0; pch != NULL; ++i) {
                         //printf("%s\n", pch);
                         value[i] = pch;
-                        cout << value[i];
+                        //cout << value[i];
                         pch = strtok(NULL, " ");
                     }
                     i++;
@@ -216,6 +216,9 @@ class Parse {
         }*/
         char** get_front_cmd() {
             char** temp = cmds.front();
+            //cout << "IN_GET_FRONT_CMD\n";
+            //cout << cmds.front()[1];
+            //cout << cmds.front()[2];
             cmds.pop();
             return temp;
         }
