@@ -64,13 +64,14 @@ class Parse {
                 s = s.substr(0,comment-1);
             }
             while (s.size()) {
+                cout << "PROBABLY STUCK HERE\n";
                 // set up the variables
                 int semi = s.find_first_of(";", 0);
                 int orrr = s.find_first_of("||", 0);
                 int andd = s.find_first_of("&&", 0);
 
                 int pos = smallest(semi, orrr, andd);
-
+                cout << pos << "\n";
                 // this is for sitatuions where nothing can be found
                 if(pos == -1) {// needs to be fixed for base case
                     strcpy(str,s.c_str());
@@ -87,6 +88,7 @@ class Parse {
                     }
                     value[++i] = NULL;
                     cmds.push(value);
+                    break;
                 }
                 else if (pos == semi) {
                     strcpy(str,s.substr(0,pos-1).c_str());
@@ -152,9 +154,10 @@ class Parse {
                       //cout << "END WHILE\n";
                 }
             }
+            cout << "NOPE TO BAD\n";
         }
         void parse_clear() { user_in.clear(); }
-        bool exit() {
+        /*bool exit() {
             char* e = (char*)"exit";
               cout << "exit_\n";
             //return (strcmp("here", e) == 0);
@@ -163,7 +166,7 @@ class Parse {
                 return false;
             }
             return (strcmp(user_in.front(), e) == 0);
-        }
+        }*/
         char** get_front_cmd() {
             char** temp = cmds.front();
             cmds.pop();
