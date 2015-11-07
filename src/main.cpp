@@ -9,10 +9,13 @@
 
 //forks a new procces
 bool command (char** args) {
-    std::cout << "in command\n";
-    //for(int i = 0; args[i] != NULL; i++){
-      // std::cout << args[i] << std::endl;
-    //}
+    //std::cout << "in command\n";
+    for(int i = 0; args[i] != NULL; i++){
+       std::cout << args[i] << std::endl;
+    }
+    if(strcmp(args[0],"exit") == 0){
+        exit(0);
+    }
     bool data = 1;
     pid_t c_pid, pid;
     int status;
@@ -56,8 +59,10 @@ int main (void) {
         //std::cout << "in.parse_input\n";
         //if (in.exit()) { exit(0); }
         //std::cout << "exit\n";
+
         while(in.cmd_front()) {
-            command(in.get_front_cmd());
+            in.set_bool(command(in.get_front_cmd()));
+            // in.run_logic();
         }
 
         //std::cout << "in.get_cmd\n";

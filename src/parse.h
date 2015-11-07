@@ -21,17 +21,22 @@ class Parse {
         queue<char**> cmds; // The final commands that are going to used
     public:
         vector<char*> user_in;  // Stores the seperate words entered by the user
-        vector<int> logic;      // Stores the logic for the user_input
+        queue<int> logic;      // Stores the logic for the user_input
                                 // 0: ; 1: || 2: &&
-        bool global_bool_val;
+        int bool_val;      // Fake "bool" to control logic
+        // dumb helper functions to set bool_val
+        void set_bool( bool val ) { 
+            if ( val ) { bool_val = 1; }
+            else { bool_val = 0; }
+        }
+        void reset_bool() { bool_val = -1; }
 
-
-        Parse() {
+        Parse() : bool_val(-1) {
             str = new char[MAX];
             str[0] = '\0';
         }
-        Parse(char* s) { strcpy(str, s); }
-        Parse(string s) { strcpy(str, s.c_str()); }
+        Parse(char* s) : bool_val(-1) { strcpy(str, s); }
+        Parse(string s) : bool_val(-1) { strcpy(str, s.c_str()); }
         ~Parse() { if (str) { delete[] str; } }
 
         void parse_input(string s) {
@@ -71,14 +76,22 @@ class Parse {
                 int orrr = s.find_first_of("||", 0);
                 int andd = s.find_first_of("&&", 0);
 
+                cout << semi << " " << orrr << " " << andd << endl;
                 int pos = smallest(semi, orrr, andd);
                 cout << pos << "\n";
+
+                //break;
+
                 // this is for sitatuions where nothing can be found
                 if(pos == -1) {// needs to be fixed for base case
                     strcpy(str,s.c_str());
                     pch = strtok(str, " ");
                     char** value = new char*[MAX];
-                    logic.push_back(0);
+                    for(int i = 0; i < MAX; i++){
+                        value[1] = new char[MAX]();
+                    }
+                    logic.push(0);
+                    s.erase(0,pos);
                     //cout << "strok(str, " ")\n";
                     
                     int i; // decalred otuside for loop
@@ -96,14 +109,18 @@ class Parse {
                     break;
                 }
                 else if (pos == semi) {
-                    strcpy(str,s.substr(0,pos-1).c_str());
+                    strcpy(str,s.substr(0,pos).c_str());
                     //str = s.substr(0,pos);
-                    s.erase(0,pos);
+                    s.erase(0,pos+1);
                     //str = str.substr(0,str.size()-1);
-                    logic.push_back(0);
+                    logic.push(0);
 
                     pch = strtok(str, " ");
                     char** value = new char*[MAX];
+                    for(int i = 0; i < MAX; i++){
+                        value[1] = new char[MAX]();
+                    }
+
                     //cout << "strok(str, " ")\n";
                     
                     int i; // decalred otuside for loop
@@ -117,14 +134,17 @@ class Parse {
                       //cout << "END WHILE\n";
                 }
                 else if (pos == orrr) {
-                    strcpy(str,s.substr(0,pos-1).c_str());
+                    strcpy(str,s.substr(0,pos).c_str());
                     //str = s.substr(0,pos);
-                    s.erase(0,pos);
+                    s.erase(0,pos+1);
                     //str = str.substr(0,str.size()-1);
-                    logic.push_back(1);
+                    logic.push(1);
 
                     pch = strtok(str, " ");
                     char** value = new char*[MAX];
+                    for(int i = 0; i < MAX; i++){
+                        value[1] = new char[MAX]();
+                    }
                     //cout << "strok(str, " ")\n";
                     
                     int i; // decalred otuside for loop
@@ -138,14 +158,17 @@ class Parse {
                       //cout << "END WHILE\n";
                 }
                 else if (pos == andd) {
-                    strcpy(str,s.substr(0,pos-1).c_str());
+                    strcpy(str,s.substr(0,pos).c_str());
                     //str = s.substr(0,pos);
-                    s.erase(0,pos);
+                    s.erase(0,pos+1);
                     //str = str.substr(0,str.size()-1);
-                    logic.push_back(2);
+                    logic.push(2);
 
                     pch = strtok(str, " ");
                     char** value = new char*[MAX];
+                    for(int i = 0; i < MAX; i++){
+                        value[1] = new char[MAX]();
+                    }
                     //cout << "strok(str, " ")\n";
                     
                     int i; // decalred otuside for loop
@@ -180,32 +203,52 @@ class Parse {
         bool cmd_front(){
             return !cmds.empty();
         }
-        /*void print_vector() {
-            // for (int i = 0, max = user_in.size(); i < max; i++) {
-            for (vector<char*>::iterator it = user_in.begin(), end = user_in.end(); it != end; it++) {
-                // printf("%s\n", user_in[i]);
-                printf("%s\n", *it);
+        void run_logic() {
+            bool end_logic = false;
+            while (!end_logic) {
+                switch(logic.front())
+                {
+                    // semi
+                    case 0:
+                        end_logic = true;
+                        reset_bool();
+                        break;
+                    // orrr
+                    case 1:
+                        if ( bool_val == 1 ) { cmds.pop(); }
+                        else if ( bool_val == 0 ) { end_logic = true; } 
+                        break;
+                    // andd
+                    case 2:
+                        if ( bool_val == 1) { end_logic = true; }
+                        else if ( bool_val == 0 ) { cmds.pop(); }
+                        break;
+                    default:
+                        break;
+                }
+                logic.pop();
             }
-        }*/
+        }
 
         // helper math funciton that returns the samllest number of 3 numbers
         int smallest(int x, int y, int z) {
-            int result;
-            if(x == y && y == z && z == -1){
-                return -1;
+            int small;
+            vector<int> result;
+            if ( x != -1 ) { result.push_back(x); }
+            if ( y != -1 ) { result.push_back(y); }
+            if ( z != -1 ) { result.push_back(z); }
+
+            // remove all -1
+
+            if (result.empty()) { return -1; }
+            else {
+                small = result.front();
+                for(int i = 0; i < result.size(); ++i) {
+                    if ( small > result.at(i) ) { small = result.at(i); }
+                }
             }
-            if(x != -1){
-                result = x;
-            }
-            else if(y != -1){
-                result = y;
-            }
-            else{
-                return z;
-            }
-            if (y < result && y != 0) { result = y; }
-            if (z < result && z != 0) { result = z; }
-            return result;
+
+            return small;
         }
 
 };
