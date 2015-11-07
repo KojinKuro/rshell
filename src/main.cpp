@@ -9,10 +9,11 @@
 
 //forks a new procces
 bool command (char** args) {
-    //std::cout << "in command\n";
-    /*for(int i = 0; args[i] != NULL; i++){
-       std::cout << args[i] << std::endl;
-    }*/
+    std::cout << "in command\n";
+    for(int i = 0; args[i] != NULL; i++){
+       std::cout << args[i];
+    }
+    std::cout << std::endl;
     if(strcmp(args[0],"exit") == 0){
         exit(0);
     }

@@ -92,7 +92,7 @@ class Parse {
                     pch = strtok(str, " ");
                     char** value = new char*[MAX];
                     for(int i = 0; i < MAX; i++){
-                        value[1] = new char[MAX]();
+                        value[i] = new char[MAX]();
                     }
                     logic.push(0);
                     
@@ -102,9 +102,11 @@ class Parse {
                     for (i = 0; pch != NULL; ++i) {
                         //printf("%s\n", pch);
                         value[i] = pch;
+                        cout << value[i];
                         pch = strtok(NULL, " ");
                     }
-                    value[++i] = NULL;
+                    i++;
+                    value[i] = NULL;
                     cmds.push(value);
                     s.erase(0,pos);
                     //for(int i = 0; value[i] != NULL; i++){
@@ -116,14 +118,14 @@ class Parse {
                 else if (pos == semi) {
                     strcpy(str,s.substr(0,pos).c_str());
                     //str = s.substr(0,pos);
-                    s.erase(0,pos+1);
+                    
                     //str = str.substr(0,str.size()-1);
                     logic.push(0);
 
                     pch = strtok(str, " ");
                     char** value = new char*[MAX];
                     for(int i = 0; i < MAX; i++){
-                        value[1] = new char[MAX]();
+                        value[i] = new char[MAX]();
                     }
 
                     //cout << "strok(str, " ")\n";
@@ -132,23 +134,26 @@ class Parse {
                     for (i = 0; pch != NULL; ++i) {
                         //printf("%s\n", pch);
                         value[i] = pch;
+                        cout << value[i];
                         pch = strtok(NULL, " ");
                     }
-                    value[++i] = NULL;
+                    i++;
+                    value[i] = NULL;
                     cmds.push(value);
                       //cout << "END WHILE\n";
+                    s.erase(0,pos+1);
+
                 }
                 else if (pos == orrr) {
                     strcpy(str,s.substr(0,pos).c_str());
                     //str = s.substr(0,pos);
-                    s.erase(0,pos+1);
-                    //str = str.substr(0,str.size()-1);
+                                        //str = str.substr(0,str.size()-1);
                     logic.push(1);
 
                     pch = strtok(str, " ");
                     char** value = new char*[MAX];
                     for(int i = 0; i < MAX; i++){
-                        value[1] = new char[MAX]();
+                        value[i] = new char[MAX]();
                     }
                     //cout << "strok(str, " ")\n";
                     
@@ -156,23 +161,26 @@ class Parse {
                     for (i = 0; pch != NULL; ++i) {
                         //printf("%s\n", pch);
                         value[i] = pch;
+                        cout << value[i];
                         pch = strtok(NULL, " ");
                     }
-                    value[++i] = NULL;
+                    i++;
+                    value[i] = NULL;
                     cmds.push(value);
                       //cout << "END WHILE\n";
+                    s.erase(0,pos+1);
+
                 }
                 else if (pos == andd) {
                     strcpy(str,s.substr(0,pos).c_str());
                     //str = s.substr(0,pos);
-                    s.erase(0,pos+1);
                     //str = str.substr(0,str.size()-1);
                     logic.push(2);
                             
                     pch = strtok(str, " ");
                     char** value = new char*[MAX];
                     for(int i = 0; i < MAX; i++){
-                        value[1] = new char[MAX]();
+                        value[i] = new char[MAX]();
                     }
                     //cout << "strok(str, " ")\n";
 
@@ -182,11 +190,15 @@ class Parse {
                     for (i = 0; pch != NULL; ++i) {
                         //printf("%s\n", pch);
                         value[i] = pch;
+                        cout << value[i];
                         pch = strtok(NULL, " ");
                     }
-                    value[++i] = NULL;
+                    i++;
+                    value[i] = NULL;
                     cmds.push(value);
                       //cout << "END WHILE\n";
+                    s.erase(0,pos+1);
+ 
                 }
             }
             //cout << "NOPE TO BAD\n";
