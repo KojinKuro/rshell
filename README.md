@@ -2,9 +2,8 @@ Charles Kwang - ckwan004
 Alec Wallace - awall006
 
 # rshell
-* Hello there! Welcome to my README.md file.
 ## Overview
-Insert overview of what rshell does here.
+This is *rshell*. *rshell* is a pseudo terminal that runs bash commands and scrips.
 
 ## How to Build
 ```bash
