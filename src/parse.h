@@ -7,19 +7,22 @@
 #include <cstring>
 #include <cctype>
 #include <vector>
-
-#define MAX 80
+#include <list>
+#include <queue>
 
 using namespace std;
+
+#define MAX 80;
 
 class Parse {
     protected:
         char* str; 		//The string entered by the user
-        char* cmd[MAX];
+        queue<char**> cmds; // The final commands that are going to used
     public:
         vector<char*> user_in;  // Stores the seperate words entered by the user
         vector<int> logic;      // Stores the logic for the user_input
                                 // 0: ; 1: || 2: &&
+        bool global_bool_val;
 
 
         Parse() {
@@ -33,7 +36,7 @@ class Parse {
         void parse_input(string s) {
             strcpy(str, s.c_str());
             char* pch;
-              cout << "PARSE_INPUT\n";
+              /*cout << "PARSE_INPUT\n";
             pch = strtok(str, " ");
               //cout << "strok(str, " ")\n";
             while (pch != NULL) {
@@ -46,10 +49,21 @@ class Parse {
             }
               cout << "END WHILE\n";
             user_in.push_back(NULL);
-              cout << "DONE PARSE_INPUT\n";
+              cout << "DONE PARSE_INPUT\n";*/
+
+            // puts the words from user_input back together
+            /*s = (string)user_in.front() + " ";
+            user_in.pop_front();
+            while (!user_in.empty()) {
+                s += (string)user_in.front() + " ";
+                user_in.pop_front();
+            }*/
  
-            //GETS STUCK IN THIS LOOP
-     /*       while (s.length() > 0) {
+            int comment = s.find_first_of("#", 0);
+            if(comment != -1){
+                s = s.substr(0,comment-1);
+            }
+            while (s.size()) {
                 // set up the variables
                 int semi = s.find_first_of(";", 0);
                 int orrr = s.find_first_of("||", 0);
@@ -58,68 +72,86 @@ class Parse {
                 int pos = smallest(semi, orrr, andd);
 
                 // this is for sitatuions where nothing can be found
-                if(pos == -1) {//probably not working
-                    if(s.find_first_not_of(" ") == string::npos) { break; }
+                if(pos == -1) {// needs to be fixed for base case
+                    strcpy(str,s.c_str());
+                    pch = strtok(str, " ");
+                    char** value = new char*;
+                    logic.push_back(0);
+                    //cout << "strok(str, " ")\n";
+                    
+                    int i; // decalred otuside for loop
+                    for (i = 0; pch != NULL; ++i) {
+                        //printf("%s\n", pch);
+                        value[i] = pch;
+                        pch = strtok(NULL, " ");
+                    }
+                    value[++i] = NULL;
+                    cmds.push(value);
                 }
                 else if (pos == semi) {
+                    strcpy(str,s.substr(0,pos-1).c_str());
+                    //str = s.substr(0,pos);
+                    s.erase(0,pos);
+                    //str = str.substr(0,str.size()-1);
                     logic.push_back(0);
+
+                    pch = strtok(str, " ");
+                    char** value = new char*;
+                    //cout << "strok(str, " ")\n";
+                    
+                    int i; // decalred otuside for loop
+                    for (i = 0; pch != NULL; ++i) {
+                        //printf("%s\n", pch);
+                        value[i] = pch;
+                        pch = strtok(NULL, " ");
+                    }
+                    value[++i] = NULL;
+                    cmds.push(value);
+                      //cout << "END WHILE\n";
                 }
                 else if (pos == orrr) {
+                    strcpy(str,s.substr(0,pos-1).c_str());
+                    //str = s.substr(0,pos);
+                    s.erase(0,pos);
+                    //str = str.substr(0,str.size()-1);
                     logic.push_back(1);
+
+                    pch = strtok(str, " ");
+                    char** value = new char*;
+                    //cout << "strok(str, " ")\n";
+                    
+                    int i; // decalred otuside for loop
+                    for (i = 0; pch != NULL; ++i) {
+                        //printf("%s\n", pch);
+                        value[i] = pch;
+                        pch = strtok(NULL, " ");
+                    }
+                    value[++i] = NULL;
+                    cmds.push(value);
+                      //cout << "END WHILE\n";
                 }
                 else if (pos == andd) {
+                    strcpy(str,s.substr(0,pos-1).c_str());
+                    //str = s.substr(0,pos);
+                    s.erase(0,pos);
+                    //str = str.substr(0,str.size()-1);
                     logic.push_back(2);
+
+                    pch = strtok(str, " ");
+                    char** value = new char*;
+                    //cout << "strok(str, " ")\n";
+                    
+                    int i; // decalred otuside for loop
+                    for (i = 0; pch != NULL; ++i) {
+                        //printf("%s\n", pch);
+                        value[i] = pch;
+                        pch = strtok(NULL, " ");
+                    }
+                    value[++i] = NULL;
+                    cmds.push(value);
+                      //cout << "END WHILE\n";
                 }
-break;*/
-                /*  CODE TO USE
-                    if(pos == -1)
-                    {
-                        if(line.find_first_not_of(" ") == string::npos)
-                            return q;
-                        q.push(line);
-                        line = "";
-                    }
-                    else if(pos == semi)
-                    {
-                        string linecpy(line);
-                        if(!strtok((char*)linecpy.c_str(), ";"))
-                        {
-                            cout << "Error. not enough arguments." << endl;
-                            return q;
-                        }
-                        s = strtok((char*)line.c_str(), ";");
-                        q.push(s);
-                        q.push(";");
-                        line.erase(0, pos+1);
-                    }
-                    else if(pos == orr)
-                    {
-                        string linecpy(line);
-                        if(!strtok((char*)linecpy.c_str(), "|"))
-                        {
-                            cout << "Error. not enough arguments." << endl;
-                            return q;
-                        }
-                        s = strtok((char*)line.c_str(), "|");
-                        q.push(s);
-                        q.push("||");
-                        line.erase(0, pos+2);
-                    }
-                    else    
-                    {
-                        string linecpy(line);
-                        if(!strtok((char*)linecpy.c_str(), "&"))
-                        {
-                            cout << "Error. not enough arguments." << endl;
-                            return q;
-                        }
-                        s = strtok((char*)line.c_str(), "&");
-                        q.push(s);
-                        q.push("&&");
-                        line.erase(0, pos+2);
-                    } */
-        /*    }
-              cout << "END WHILE2\n"; */
+            }
         }
         void parse_clear() { user_in.clear(); }
         bool exit() {
@@ -133,51 +165,38 @@ break;*/
             return (strcmp(user_in.front(), e) == 0);
         }
         char** get_front_cmd() {
-            int size = user_in.size();
-            for (int i = 0; i < size; i++) {
-                cmd[i] = user_in[i];
-            }
-
-            return cmd;
+            char** temp = cmds.front();
+            cmds.pop();
+            return temp;
         }
-        // has seg fault
-        void connectors() {
-        // int connectors() {
-            int total = 0;
-            char* a = (char*)"&&";
-            char* o = (char*)"||";
-            char* e = (char*)";";
-            
-            for (int x = 0, max = user_in.size(); x < max; x++) {
-                if (strcmp(a, user_in[x]) == 0 || 
-                    strcmp(o, user_in[x]) == 0 || 
-                    strcmp(e, user_in[x]) == 0) {
-                    total++;
-                }
-            }
-
-            cout << total << endl;
-            // return total;
+        bool cmd_front(){
+            return cmds.empty();
         }
-        void print_vector() {
+        /*void print_vector() {
             // for (int i = 0, max = user_in.size(); i < max; i++) {
             for (vector<char*>::iterator it = user_in.begin(), end = user_in.end(); it != end; it++) {
                 // printf("%s\n", user_in[i]);
                 printf("%s\n", *it);
             }
-        }
-        bool can_move_on() {
-            return false;
-        }
-        void move_on() {
-
-        }
+        }*/
 
         // helper math funciton that returns the samllest number of 3 numbers
         int smallest(int x, int y, int z) {
-            int result = x;
-            if (y < result) { result = y; }
-            if (z < result) { result = z; }
+            int result;
+            if(x == y && y == z && z == -1){
+                return -1;
+            }
+            if(x != -1){
+                result = x;
+            }
+            else if(y != -1){
+                result = y;
+            }
+            else{
+                return z;
+            }
+            if (y < result && y != 0) { result = y; }
+            if (z < result && z != 0) { result = z; }
             return result;
         }
 

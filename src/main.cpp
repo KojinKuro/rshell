@@ -8,8 +8,9 @@
 #include "parse.h"
 
 //forks a new procces
-void command (char** args) {
+bool command (char** args) {
     std::cout << "in command\n";
+    bool data = 1;
     pid_t c_pid, pid;
     int status;
     c_pid = fork();
@@ -19,13 +20,14 @@ void command (char** args) {
         exit(1);
     }
     else if (c_pid == 0) {
-        execvp(*args, args);
+        data = execvp(*args, args);
         perror("execvp failed");
     }
     else if (c_pid > 0 && (pid = wait(&status)) < 0) {
         perror("wait");
         exit(1);
     }
+    return data;
 }
 
 // provides the user@hostname $
@@ -50,9 +52,9 @@ int main (void) {
         //std::cout << "in.parse_input\n";
         if (in.exit()) { exit(0); }
         //std::cout << "exit\n";
-        // while(in.get_cmd) {
+        while(in.cmd_front()) {
             command(in.get_front_cmd());
-        // }
+        }
 
         //std::cout << "in.get_cmd\n";
         printf("\n");
