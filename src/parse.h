@@ -69,6 +69,10 @@ class Parse {
             if(comment != -1){
                 s = s.substr(0,comment-1);
             }
+            /*char** value = new char*[MAX];
+                for(int i = 0; i < MAX; i++){
+                value[1] = new char[MAX]();
+            }*/
             while (s.size()) {
                 //cout << "PROBABLY STUCK HERE\n";
                 // set up the variables
@@ -76,9 +80,9 @@ class Parse {
                 int orrr = s.find_first_of("||", 0);
                 int andd = s.find_first_of("&&", 0);
 
-                cout << semi << " " << orrr << " " << andd << endl;
+                //cout << semi << " " << orrr << " " << andd << endl;
                 int pos = smallest(semi, orrr, andd);
-                cout << pos << "\n";
+                //cout << pos << "\n";
 
                 //break;
 
@@ -91,7 +95,7 @@ class Parse {
                         value[1] = new char[MAX]();
                     }
                     logic.push(0);
-                    s.erase(0,pos);
+                    
                     //cout << "strok(str, " ")\n";
                     
                     int i; // decalred otuside for loop
@@ -102,6 +106,7 @@ class Parse {
                     }
                     value[++i] = NULL;
                     cmds.push(value);
+                    s.erase(0,pos);
                     //for(int i = 0; value[i] != NULL; i++){
                       //  cout << value[i];
                     //}
@@ -163,12 +168,14 @@ class Parse {
                     s.erase(0,pos+1);
                     //str = str.substr(0,str.size()-1);
                     logic.push(2);
-
+                            
                     pch = strtok(str, " ");
                     char** value = new char*[MAX];
                     for(int i = 0; i < MAX; i++){
                         value[1] = new char[MAX]();
                     }
+                    //cout << "strok(str, " ")\n";
+
                     //cout << "strok(str, " ")\n";
                     
                     int i; // decalred otuside for loop
@@ -215,6 +222,7 @@ class Parse {
                         break;
                     // orrr
                     case 1:
+                        //cout << "in case 1\n";
                         if ( bool_val == 1 ) { cmds.pop(); }
                         else if ( bool_val == 0 ) { end_logic = true; } 
                         break;
@@ -243,7 +251,7 @@ class Parse {
             if (result.empty()) { return -1; }
             else {
                 small = result.front();
-                for(int i = 0; i < result.size(); ++i) {
+                for(unsigned i = 0; i < result.size(); ++i) {
                     if ( small > result.at(i) ) { small = result.at(i); }
                 }
             }

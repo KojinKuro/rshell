@@ -10,9 +10,9 @@
 //forks a new procces
 bool command (char** args) {
     //std::cout << "in command\n";
-    for(int i = 0; args[i] != NULL; i++){
+    /*for(int i = 0; args[i] != NULL; i++){
        std::cout << args[i] << std::endl;
-    }
+    }*/
     if(strcmp(args[0],"exit") == 0){
         exit(0);
     }
@@ -62,7 +62,7 @@ int main (void) {
 
         while(in.cmd_front()) {
             in.set_bool(command(in.get_front_cmd()));
-            // in.run_logic();
+            in.run_logic();
         }
 
         //std::cout << "in.get_cmd\n";
