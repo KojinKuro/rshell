@@ -10,9 +10,10 @@
 #include <list>
 #include <queue>
 
+#define MAX 80
+
 using namespace std;
 
-#define MAX 80;
 
 class Parse {
     protected:
@@ -26,7 +27,7 @@ class Parse {
 
 
         Parse() {
-            str = new char[1];
+            str = new char[MAX];
             str[0] = '\0';
         }
         Parse(char* s) { strcpy(str, s); }
@@ -64,7 +65,7 @@ class Parse {
                 s = s.substr(0,comment-1);
             }
             while (s.size()) {
-                cout << "PROBABLY STUCK HERE\n";
+                //cout << "PROBABLY STUCK HERE\n";
                 // set up the variables
                 int semi = s.find_first_of(";", 0);
                 int orrr = s.find_first_of("||", 0);
@@ -76,7 +77,7 @@ class Parse {
                 if(pos == -1) {// needs to be fixed for base case
                     strcpy(str,s.c_str());
                     pch = strtok(str, " ");
-                    char** value = new char*;
+                    char** value = new char*[MAX];
                     logic.push_back(0);
                     //cout << "strok(str, " ")\n";
                     
@@ -88,6 +89,10 @@ class Parse {
                     }
                     value[++i] = NULL;
                     cmds.push(value);
+                    //for(int i = 0; value[i] != NULL; i++){
+                      //  cout << value[i];
+                    //}
+                    //cout << "\n";
                     break;
                 }
                 else if (pos == semi) {
@@ -98,7 +103,7 @@ class Parse {
                     logic.push_back(0);
 
                     pch = strtok(str, " ");
-                    char** value = new char*;
+                    char** value = new char*[MAX];
                     //cout << "strok(str, " ")\n";
                     
                     int i; // decalred otuside for loop
@@ -119,7 +124,7 @@ class Parse {
                     logic.push_back(1);
 
                     pch = strtok(str, " ");
-                    char** value = new char*;
+                    char** value = new char*[MAX];
                     //cout << "strok(str, " ")\n";
                     
                     int i; // decalred otuside for loop
@@ -140,7 +145,7 @@ class Parse {
                     logic.push_back(2);
 
                     pch = strtok(str, " ");
-                    char** value = new char*;
+                    char** value = new char*[MAX];
                     //cout << "strok(str, " ")\n";
                     
                     int i; // decalred otuside for loop
@@ -154,7 +159,7 @@ class Parse {
                       //cout << "END WHILE\n";
                 }
             }
-            cout << "NOPE TO BAD\n";
+            //cout << "NOPE TO BAD\n";
         }
         void parse_clear() { user_in.clear(); }
         /*bool exit() {
@@ -173,7 +178,7 @@ class Parse {
             return temp;
         }
         bool cmd_front(){
-            return cmds.empty();
+            return !cmds.empty();
         }
         /*void print_vector() {
             // for (int i = 0, max = user_in.size(); i < max; i++) {

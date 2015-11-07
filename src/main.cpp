@@ -10,6 +10,9 @@
 //forks a new procces
 bool command (char** args) {
     std::cout << "in command\n";
+    //for(int i = 0; args[i] != NULL; i++){
+      // std::cout << args[i] << std::endl;
+    //}
     bool data = 1;
     pid_t c_pid, pid;
     int status;
@@ -46,22 +49,22 @@ int main (void) {
     Parse in;         // object that handles all of the commands
 
     while (true) {
-        cout << "beggining\n";
+        //cout << "beggining\n";
         prompt(); getline(cin, user_in);
-        std::cout << "user input\n";
+        //std::cout << "user input\n";
         in.parse_input(user_in);
-        std::cout << "in.parse_input\n";
+        //std::cout << "in.parse_input\n";
         //if (in.exit()) { exit(0); }
         //std::cout << "exit\n";
         while(in.cmd_front()) {
             command(in.get_front_cmd());
         }
 
-        std::cout << "in.get_cmd\n";
-        printf("\n");
+        //std::cout << "in.get_cmd\n";
+        //printf("\n");
         //cout << in.connectors() << endl;
         in.parse_clear();
-        std::cout << "parse_clear\n";
+        //std::cout << "parse_clear\n";
     }
 
     return 0;
