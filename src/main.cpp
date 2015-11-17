@@ -11,7 +11,7 @@
 bool command (char** args) {
     //std::cout << "in command\n";
     //for(int i = 0; args[i] != NULL; i++){
-      // std::cout << args[i];
+    // std::cout << args[i];
     //}
     //std::cout << std::endl;
     if(strcmp(args[0],"exit") == 0){
@@ -21,7 +21,7 @@ bool command (char** args) {
     pid_t c_pid, pid;
     int status;
     c_pid = fork();
-
+    
     if (c_pid < 0) {
         perror("fork failed");
         exit(1);
@@ -44,14 +44,14 @@ void prompt() {
     char hostname[254];                  // can hold a 255 character hostname
     if( gethostname(hostname, 255) )     // only runs if there is a host
         std::cout << hostname << " ";
-   std::cout << "$" << " ";
+    std::cout << "$" << " ";
 }
 
 int main (void) {
     //std::cout << "main\n";
     string user_in;    // the values of the string go into here
     Parse in;         // object that handles all of the commands
-
+    
     while (true) {
         //cout << "beggining\n";
         prompt(); getline(cin, user_in);
@@ -60,18 +60,17 @@ int main (void) {
         //std::cout << "in.parse_input\n";
         //if (in.exit()) { exit(0); }
         //std::cout << "exit\n";
-
+        
         while(in.cmd_front()) {
             in.set_bool(command(in.get_front_cmd()));
             in.run_logic();
         }
-
+        
         //std::cout << "in.get_cmd\n";
         //printf("\n");
         //cout << in.connectors() << endl;
-        in.parse_clear();
         //std::cout << "parse_clear\n";
     }
-
+    
     return 0;
 }

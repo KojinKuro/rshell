@@ -4,8 +4,8 @@ BIN	= bin/
 
 CC	= g++
 WFLAGS	= -Wall -Werror
-LFLAGS	=
-CFLAGS	= -ansi -pedantic $(WFLAGS)
+LFLAGS	= 
+CFLAGS	= -g -ansi -pedantic $(WFLAGS)
 LIBS	=
 
 HDRS	= $(shell find $(DIR) -name '*.h')
