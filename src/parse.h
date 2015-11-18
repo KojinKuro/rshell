@@ -162,34 +162,40 @@ public:
      return (strcmp(user_in.front(), e) == 0);
      }*/
     char** get_front_cmd() {
+        // sanitizes everything for use
+        for(int i=0; i < MAX; ++i) { command[i] = NULL; }
+        reset_bool();
+
         for (int i = 0; i < cmds.front().size() - 1; ++i) {
             command[i] = cmds.front().at(i);
-        } cmds.pop();
+        }
         return command;
     }
     bool cmd_front(){
         return !cmds.empty();
     }
     void run_logic() {
+        cmds.pop();
+
         bool end_logic = false;
         while (!end_logic) {
-            switch(logic.front())
-            {
+            switch(logic.front()) {
                     // semi
                 case 0:
-                    end_logic = true;
-                    reset_bool();
+                    end_logic = true; reset_bool();
                     break;
                     // orrr
                 case 1:
                     //cout << "in case 1\n";
                     if ( bool_val == 1 ) { cmds.pop(); }
                     else if ( bool_val == 0 ) { end_logic = true; }
+                    else { end_logic = true; reset_bool(); }
                     break;
                     // andd
                 case 2:
-                    if ( bool_val == 1) { end_logic = true; }
+                    if ( bool_val == 1) { end_logic = true; reset_bool(); }
                     else if ( bool_val == 0 ) { cmds.pop(); }
+                    else { end_logic = true; reset_bool(); }
                     break;
                 default:
                     break;
