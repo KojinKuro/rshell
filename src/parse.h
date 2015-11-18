@@ -91,7 +91,7 @@ public:
             // this is for sitatuions where nothing can be found
             if(pos == -1) {// needs to be fixed for base case
                 strcpy(str_cpy, s.c_str());
-                s.erase(0,pos);
+                s.erase(0,s.size());
                 
                 char* pch;
                 pch = strtok(str_cpy, " ");
@@ -120,7 +120,7 @@ public:
             }
             else if (pos == orrr) {
                 strcpy(str_cpy,s.substr(0,pos).c_str());
-                s.erase(0,pos+1);
+                s.erase(0,pos+2);
                 
                 char* pch;
                 pch = strtok(str_cpy, " ");
@@ -134,7 +134,7 @@ public:
             }
             else if (pos == andd) {
                 strcpy(str_cpy,s.substr(0,pos).c_str());
-                s.erase(0,pos+1);
+                s.erase(0,pos+2);
                 
                 char* pch;
                 pch = strtok(str_cpy, " ");
@@ -197,6 +197,8 @@ public:
                     else if ( bool_val == 0 ) { cmds.pop(); }
                     else { end_logic = true; reset_bool(); }
                     break;
+                    // end_logic = true; reset_bool();
+                    // break;
                 default:
                     break;
             }
