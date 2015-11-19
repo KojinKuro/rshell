@@ -105,6 +105,17 @@ public:
                 strcpy(str_cpy, s.c_str());
                 s.erase(0,s.size());
                 
+                // gets rid of quotes from final code
+                for(int i=0; i < MAX; ++i)
+                {
+                    if(str_cpy[i] =='\"') {
+                        int j = i;
+                        for(; j < MAX-1; ++j) {
+                            str_cpy[j] = str_cpy[j+1];
+                        } str_cpy[j] = '\0';
+                    }
+                }
+                
                 char* pch;
                 pch = strtok(str_cpy, " ");
                 logic.push(0); // controls logic
@@ -120,6 +131,17 @@ public:
                 strcpy(str_cpy,s.substr(0,pos).c_str());
                 s.erase(0,pos+1);
                 
+                // gets rid of quotes from final code
+                for(int i=0; i < MAX; ++i)
+                {
+                    if(str_cpy[i] == '\"') {
+                        int j = i;
+                        for(; j < MAX-1; ++j) {
+                            str_cpy[j] = str_cpy[j+1];
+                        } str_cpy[j] = '\0';
+                    }
+                }
+                
                 char* pch;
                 pch = strtok(str_cpy, " ");
                 logic.push(0); // controls logic
@@ -134,6 +156,17 @@ public:
                 strcpy(str_cpy,s.substr(0,pos).c_str());
                 s.erase(0,pos+2);
                 
+                // gets rid of quotes from final code
+                for(int i=0; i < MAX; ++i)
+                {
+                    if(str_cpy[i] == '\"') {
+                        int j = i;
+                        for(; j < MAX-1; ++j) {
+                            str_cpy[j] = str_cpy[j+1];
+                        } str_cpy[j] = '\0';
+                    }
+                }
+                
                 char* pch;
                 pch = strtok(str_cpy, " ");
                 logic.push(1); // controls logic
@@ -147,6 +180,17 @@ public:
             else if (pos == andd) {
                 strcpy(str_cpy,s.substr(0,pos).c_str());
                 s.erase(0,pos+2);
+                
+                // gets rid of quotes from final code
+                for(int i=0; i < MAX; ++i)
+                {
+                    if(str_cpy[i] == '\"') {
+                        int j = i;
+                        for(; j < MAX-1; ++j) {
+                            str_cpy[j] = str_cpy[j+1];
+                        } str_cpy[j] = '\0';
+                    }
+                }
                 
                 char* pch;
                 pch = strtok(str_cpy, " ");
