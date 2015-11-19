@@ -20,10 +20,13 @@ protected:
     char* str;      //The string entered by the user
     queue<vector<char*> > cmds; // The final commands that are going to used
     char* command[MAX]; // WHAT IS BEING SENT
+    vector<int> quoteHolder; // HANDLES QUOTATIONS
 public:
-    queue<int> logic;      // Stores the logic for the user_input
-    // 0: ; 1: || 2: &&
-    int bool_val;      // Fake "bool" to control logic
+    queue<int> logic;   // Stores the logic for the user_input
+                        // 0: ; 1: || 2: &&
+    int bool_val; // Fake "bool" to control logic
+    
+
     // dumb helper functions to set bool_val
     void set_bool( bool val ) {
         if ( val ) { bool_val = 1; }
@@ -40,47 +43,56 @@ public:
     ~Parse() { if (str) { delete[] str; } }
     
     void parse_input(string s) {
-        /*cout << "PARSE_INPUT\n";
-         pch = strtok(str, " ");
-         //cout << "strok(str, " ")\n";
-         while (pch != NULL) {
-         //printf("%s\n", pch);
-         if(pch[0] == '#'){
-         break;
-         }
-         user_in.push_back(pch);
-         pch = strtok(NULL, " ");
-         }
-         cout << "END WHILE\n";
-         user_in.push_back(NULL);
-         cout << "DONE PARSE_INPUT\n";*/
-        
-        // puts the words from user_input back together
-        /*s = (string)user_in.front() + " ";
-         user_in.pop_front();
-         while (!user_in.empty()) {
-         s += (string)user_in.front() + " ";
-         user_in.pop_front();
-         }*/
-        
-        int comment = s.find_first_of("#", 0);
-        if(comment != -1){
-            s = s.substr(0,comment-1);
-        }
-        /*char** value = new char*[MAX];
-         for(int i = 0; i < MAX; i++){
-         value[1] = new char[MAX]();
-         }*/
-        
+        // inputs all the quotes into hanlder and gets ready
+        int tempNumber = -1; quoteHolder.clear();
+        do {
+            tempNumber = s.find_first_of("\"", tempNumber+1);
+            if(tempNumber != -1)
+                quoteHolder.push_back(tempNumber);
+        } while(tempNumber != -1);
+        // cleans up if excess qutoes ex: 3 instead of 2
+        if(quoteHolder.size() % 2 != 0) {
+            s.erase(quoteHolder.back(),1);
+            quoteHolder.pop_back(); } 
+
+        for(int i=0; i < quoteHolder.size(); ++i) {
+            cout << quoteHolder.at(i) << " ";
+        } cout << endl;
+
+        // removes comments out of the code
+        int comm = s.find_first_of("#", 0);
+        for(int i=0; i < quoteHolder.size()/2; ++i) {
+            if(quoteHolder.at(i*2) < comm && comm < quoteHolder.at(i*2+1)) {
+                comm = s.find_first_of("#", quoteHolder.at(i*2+1)+1);
+            }
+        } if(comm != -1){ s.erase(comm, s.size()-1); }
+
         while (s.size()) {
             vector<char*> user_in;
             char* str_cpy = new char[MAX];
             strcpy(str_cpy, s.c_str());
-            //cout << "PROBABLY STUCK HERE\n";
+
             // set up the variables
             int semi = s.find_first_of(";", 0);
             int orrr = s.find_first_of("||", 0);
             int andd = s.find_first_of("&&", 0);
+
+            // makes sure the position isn't in quotations
+            for(int i=0; i < quoteHolder.size()/2; ++i) {
+                if(quoteHolder.at(i*2) < semi && semi < quoteHolder.at(i*2+1)) {
+                    semi = s.find_first_of(";", quoteHolder.at(i*2+1)+1);
+                }
+            }
+            for(int i=0; i < quoteHolder.size()/2; ++i) {
+                if(quoteHolder.at(i*2) < orrr && orrr < quoteHolder.at(i*2+1)) {
+                    orrr = s.find_first_of("||", quoteHolder.at(i*2+1)+1);
+                }
+            }
+            for(int i=0; i < quoteHolder.size()/2; ++i) {
+                if(quoteHolder.at(i*2) < andd && andd < quoteHolder.at(i*2+1)) {
+                    andd = s.find_first_of("&&", quoteHolder.at(i*2+1)+1);
+                }
+            } // high unefficent optimize later;
             
             //cout << semi << " " << orrr << " " << andd << endl;
             int pos = smallest(semi, orrr, andd);
@@ -145,7 +157,6 @@ public:
                 }
                 user_in.push_back(NULL);
                 cmds.push(user_in);
-                
             }
         }
         //cout << "NOPE TO BAD\n";
@@ -186,7 +197,6 @@ public:
                     break;
                     // orrr
                 case 1:
-                    //cout << "in case 1\n";
                     if ( bool_val == 1 ) { cmds.pop(); }
                     else if ( bool_val == 0 ) { end_logic = true; }
                     else { end_logic = true; reset_bool(); }
@@ -197,8 +207,6 @@ public:
                     else if ( bool_val == 0 ) { cmds.pop(); }
                     else { end_logic = true; reset_bool(); }
                     break;
-                    // end_logic = true; reset_bool();
-                    // break;
                 default:
                     break;
             }
