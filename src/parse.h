@@ -55,10 +55,6 @@ public:
             s.erase(quoteHolder.back(),1);
             quoteHolder.pop_back(); } 
 
-        for(int i=0; i < quoteHolder.size(); ++i) {
-            cout << quoteHolder.at(i) << " ";
-        } cout << endl;
-
         // removes comments out of the code
         int comm = s.find_first_of("#", 0);
         for(int i=0; i < quoteHolder.size()/2; ++i) {
