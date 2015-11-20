@@ -18,7 +18,3 @@ $ ./bin/rshell
 ```
 
 ## Known Bugs
-* || doesn't work
-* && breaks the first input and if there is 3 inputs ignores the second and inputs the third twice
-* Semicolon breaks the first input
-* mkdir, ls don't work

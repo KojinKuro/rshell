@@ -56,14 +56,16 @@ int main (void) {
         //cout << "beggining\n";
         prompt(); getline(cin, user_in);
         //std::cout << "user input\n";
-        in.parse_input(user_in);
+        in.parse_input(user_in, false);
         //std::cout << "in.parse_input\n";
         //if (in.exit()) { exit(0); }
         //std::cout << "exit\n";
         
         while(in.cmd_front()) {
             in.set_bool(command(in.get_front_cmd()));
+            //cout << "ran command" << endl;
             in.run_logic();
+            //cout << "ran logic" << endl;
         }
         
         //std::cout << "in.get_cmd\n";
