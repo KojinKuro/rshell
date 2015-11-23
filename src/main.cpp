@@ -175,7 +175,7 @@ int main (void) {
         //cout << "beggining\n";
         prompt(); getline(cin, user_in);
         //std::cout << "user input\n";
-        in.parse_input(user_in);
+        in.parse_input(user_in, false);
         //std::cout << "in.parse_input\n";
         //if (in.exit()) { exit(0); }
         //std::cout << "exit\n";
