@@ -95,7 +95,7 @@ public:
                     andd = s.find_first_of("&&", quoteHolder.at(i*2+1)+1);
                 }
             }
-             for(unsigned i=0; i < quoteHolder.size()/2; ++i) {
+            for(unsigned i=0; i < quoteHolder.size()/2; ++i) {
                 if(quoteHolder.at(i*2) < andd && andd < quoteHolder.at(i*2+1)) {
                     parr = s.find_first_of("(", quoteHolder.at(i*2+1)+1);
                 }
