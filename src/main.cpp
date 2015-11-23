@@ -23,7 +23,8 @@ bool isCustomCommand(char** args) {
     
     // checks to see if custom command
     if(!strcmp(temp_commands.front(), "exit") ||
-       !strcmp(temp_commands.front(), "test")) {
+       !strcmp(temp_commands.front(), "test")
+       !strcmp(temp_commands.front(), "[")) {
         return true;
     } return false;
 }
@@ -72,6 +73,31 @@ bool commandHandler(char** args) {
             else
                 return false;
         } else if(temp_commands.size() == 3) {
+            if(strcmp(temp_commands.at(1),"-e")) {
+                if(FileExists(temp_commands.at(1)) || DirExists(temp_commands.at(1)))
+                    return true;
+                else
+                    return false;
+            } else if(temp_commands.at(1),"-f") {
+                if(FileExists(temp_commands.at(2)))
+                    return true;
+                else
+                    return false;
+            } else if(temp_commands.at(1),"-d") {
+                if(DirExists(temp_commands.at(2)))
+                    return true;
+                else
+                    return false;
+            }
+        }
+        return false;
+    } else if (!strcmp(temp_commands.front(),"[") && !strcmp(temp_commands.back(),"]") && (temp_commands.size() == 3 || temp_commands.size() == 4)) {
+        if(temp_commands.size() == 3) {
+            if(FileExists(temp_commands.at(1)) || DirExists(temp_commands.at(1)))
+                return true;
+            else
+                return false;
+        } else if(temp_commands.size() == 4) {
             if(strcmp(temp_commands.at(1),"-e")) {
                 if(FileExists(temp_commands.at(1)) || DirExists(temp_commands.at(1)))
                     return true;
