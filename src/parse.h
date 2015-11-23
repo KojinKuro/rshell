@@ -338,13 +338,16 @@ public:
        //cout << "after loop" << endl;
     }
     
-    // helper math funciton that returns the samllest number of 3 numbers
-    int smallest(int x, int y, int z) {
+    /// helper math funciton that returns the samllest number of 3 numbers
+    int smallest(int x1 = -1, int x2= -1, int x3 = -1, int x4 = -1, int x5 = -1, int x6 = -1) {
         int small;
         vector<int> result;
-        if ( x != -1 ) { result.push_back(x); }
-        if ( y != -1 ) { result.push_back(y); }
-        if ( z != -1 ) { result.push_back(z); }
+        if ( x1 != -1 ) { result.push_back(x1); }
+        if ( x2 != -1 ) { result.push_back(x2); }
+        if ( x3 != -1 ) { result.push_back(x3); }
+        if ( x4 != -1 ) { result.push_back(x4); }
+        if ( x5 != -1 ) { result.push_back(x5); }
+        if ( x6 != -1 ) { result.push_back(x6); }
         
         // remove all -1
         
