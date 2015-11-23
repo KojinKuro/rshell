@@ -24,7 +24,7 @@ bool isCustomCommand(char** args) {
     // checks to see if custom command
     if(!strcmp(temp_commands.front(), "exit") ||
        !strcmp(temp_commands.front(), "test")
-       !strcmp(temp_commands.front(), "[")) {
+       !strcmp(temp_commands.front(), "[") ) {
         return true;
     } return false;
 }
